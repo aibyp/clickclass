@@ -4,8 +4,8 @@ from src.components.header import header_dashboard
 from src.components.footer import footer_dashboard
 
 
-
-from src.database.db import create_teacher,check_teacher_exists,teacher_login
+from src.database.db import create_teacher,check_teacher_exists,teacher_login,get_teacher_subjects
+from src.components.dialog_create_subject import create_subject_dialog
 
 
 def teacher_screen():
@@ -75,7 +75,21 @@ def teacher_tab_take_attendance():
      st.header("Take AI Attendance")
 
 def teacher_tab_manage_subjects():
-     st.header("Manage subjects")
+     teacher_id = st.session_state.teacher_data['teacher_id']
+     col1,col2=st.columns(2)
+     with col1:
+          st.header("Manage Sujects")
+     with col2:
+          if st.button("Create New Subject",width="stretch"):
+               create_subject_dialog(teacher_id)
+
+     #List all subjects of that teacher:
+     subjects=get_teacher_subject(teacher_id)
+     if subjects:
+          for sub in subjects:
+               #display the subject of that teacher
+
+
 
 
 def teacher_tab_attendance_records():

@@ -2,6 +2,7 @@ import streamlit as st
 from src.ui.base_layout import style_background_dashboard, style_base_layout
 from src.components.header import header_dashboard
 from src.components.footer import footer_dashboard
+from src.components.subject_card import subject_card
 
 
 from src.database.db import create_teacher,check_teacher_exists,teacher_login,get_teacher_subjects
@@ -84,10 +85,31 @@ def teacher_tab_manage_subjects():
                create_subject_dialog(teacher_id)
 
      #List all subjects of that teacher:
-     subjects=get_teacher_subject(teacher_id)
+     subjects=get_teacher_subjects(teacher_id)
      if subjects:
           for sub in subjects:
-               #display the subject of that teacher
+               #display the subject of that teacher  each and every stack 
+               stats=[
+                    ("Students",sub['total_students']),
+                    ("Classess",sub['total_classess'])
+               ]
+
+               def share_btn():
+                     if st.button(f"Share Code: {sub['name']}", key=f"share_{sub['subject_code']}", icon=":material/share:"):
+                          share_subject_dialog(sub['name'], sub['subject_code'])
+                     st.space()
+
+               subject_card(
+                    name=sub['name'],
+                    code=sub['subject_code'],
+                    section=sub['section'],
+                    stats=stats,
+                    footer_callback=share_btn
+               )
+     else:
+          st.info("NO SUBJECTS FOUND, CREATE ONE")
+          
+
 
 
 

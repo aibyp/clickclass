@@ -52,7 +52,7 @@ def get_teacher_subjects(teacher_id):
     subjects=response.data
 
     for sub in subjects:
-        sub['total_students']=sub.get("subjects_students",[{}])[0].get('count',0) if sub.get("subject_students") else 0 #if anythings not there return empty array
+        sub['total_students']=sub.get("subject_students",[{}])[0].get('count',0) if sub.get("subject_students") else 0 #if anythings not there return empty array
      #while using get we use getback , if got fine , otherwise return empty
         attendance=sub.get("attendance_logs",[])
         unique_sessions= len(set(log['timestamp'] for log in attendance))

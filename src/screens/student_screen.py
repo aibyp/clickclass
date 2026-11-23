@@ -2,7 +2,7 @@ import streamlit as st
 from src.ui.base_layout import style_background_dashboard, style_base_layout
 from src.components.header import header_dashboard
 from src.components.footer import footer_dashboard
-from src.pipelines.face_pipeline import predict_attendence,get_face_embeddings,train_classifier
+from src.pipelines.face_pipeline import predict_attendance,get_face_embeddings,train_classifier
 from src.database.db import get_all_students,create_student,get_student_subjects,get_student_attendance,unenroll_student_to_subject
 from PIL import Image
 import numpy as np
@@ -120,7 +120,7 @@ def student_screen():
          img=np.array(Image.open(photo_source))
 
          with st.spinner("AI Is Scanning"):   #while ai is doing its job of predicting , it spins
-            detected, all_ids,num_faces= predict_attendence(img)
+            detected, all_ids,num_faces= predict_attendance(img)
 
             if num_faces==0:
                 st.warning("No face found!!!")
